@@ -1,17 +1,17 @@
+import { observable, useStrict, action } from "mobx"
+
+useStrict(true);
+
 //DataStore for this Demo
 class BookStore {
 
-  constructor() {
-    this._books = [];
+@observable _books = [];
+
+constructor() {
     this.fetchBooks();
-    this._observer = null;
   }
   get books() {
     return this._books;
-  }
-
-  subscribe(observer) {
-    this._observer = observer;
   }
 
   getBook(id) {
@@ -20,19 +20,34 @@ class BookStore {
     })[0];
   }
 
+@action
+  changeBooks(books){
+    this._books.replace(books);
+  }
+
+@action
+  addBook(book){
+    this._books.push(book);
+  }
+
+//this is asynchronous
   fetchBooks = ()=> {
     fetch("http://localhost:7777/books")
       .then((response) => {
         return response.json()
       })
       .then((response) => {
-        this._books = response;
+        this.changeBooks(response);
+        // this._books.replace(response);
         console.log("Got books from server");
-        if (this._observer) {
-          this._observer.dataReady();
-        }
       })
   }
 }
 
-export default new BookStore();
+//this shows how cool MobX is ;)
+let store = new BookStore();
+
+//global object in the browser, store has my books array
+window.store = store;
+
+export default store;
