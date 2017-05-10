@@ -9,6 +9,7 @@ export default class Details extends React.Component {
     let book = store.getBook(id);
     return (
       <div>
+      <button>Edit</button>
         <h3 style={{color: "steelblue"}}>Detailed info for the title: {book.title}</h3>
         <h4> {book.info}</h4>
         <h4>{book.moreInfo}</h4>

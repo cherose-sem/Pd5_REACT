@@ -5,33 +5,50 @@ useStrict(true);
 //DataStore for this Demo
 class BookStore {
 
-@observable _books = [];
+  @observable _books = [];
 
-constructor() {
+  constructor() {
     this.fetchBooks();
   }
+
+  //get all books
   get books() {
     return this._books;
   }
 
+  //individual books
   getBook(id) {
     return this._books.filter((book) => {
       return book.id === Number(id);
     })[0];
   }
 
-@action
-  changeBooks(books){
-    this._books.replace(books);
+  //edit a book
+  @action
+  changeBooks(id) {
+    this._books.replace(id);
   }
 
-@action
-  addBook(book){
+  //add a new book
+  @action
+  newBook(title, info, moreInfo) {
+    let book = { "id": this._books.length + 1, "title": title, "info": info, "moreInfo": moreInfo }
+    this.addBook(book);
+  }
+
+  @action
+  addBook(book) {
     this._books.push(book);
   }
 
-//this is asynchronous
-  fetchBooks = ()=> {
+  //delete a book
+  @action
+  deleteBook(book_id) {
+    this._books.splice(this._books.findIndex((book) => { return book.id === book_id }), 1)
+  }
+
+  //this is asynchronous
+  fetchBooks = () => {
     fetch("http://localhost:7777/books")
       .then((response) => {
         return response.json()

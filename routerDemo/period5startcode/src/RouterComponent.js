@@ -6,6 +6,7 @@ import Company from "./Company";
 import Blog from "./Blog";
 import Details from "./Details";
 import Home from "./Home";
+import NewBook from "./NewBook";
 
  export default class RouterComponent extends React.Component {
 
@@ -21,6 +22,7 @@ import Home from "./Home";
                    bookStore={this.props.bookStore}/>
             <Route path="company" component={Company}/>
             <Route path="blog" component={Blog}/>
+            <Route path="newbook" component={NewBook}/>
           </Route>
         </Router>
       </div>

@@ -10,6 +10,7 @@ export default class App extends React.Component {
           <li><Link activeClassName="active" to="/products">Products</Link></li>
           <li><Link activeClassName="active" to="/company">Company</Link></li>
           <li><Link activeClassName="active" to="/blog">Blog</Link></li>
+          <li><Link activeClassName="active" to="/newbook">New Book</Link></li>
         </ul>
         <div className="content">
           {this.props.children}
