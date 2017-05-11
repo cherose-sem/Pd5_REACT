@@ -26,7 +26,7 @@ import {Link} from "react-router";
                    bookStore={this.props.bookStore}/>
             <Route path="company" component={Company}/>
             <Route path="blog" component={Blog}/>
-            <Route path="newbook" component={NewBook}/>
+            <Route path="newbook" bookcomponent={NewBook}/>
           </Route>
         </Router>
       </div>

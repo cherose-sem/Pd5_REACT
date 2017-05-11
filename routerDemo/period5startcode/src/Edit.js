@@ -5,7 +5,7 @@ export default class Edit extends React.Component {
     render() {
         const id = this.props.params.id;
         const store = this.props.route.bookStore;
-        let book = store.changeBook(id);
+        let book = store.changeBook(id); // this is a problem
         return (
             <div>
                 <h2> EDIT YOUR BOOK HERE!!! (^.^) </h2>
