@@ -1,6 +1,7 @@
-
 import React from "react"
+import { observer } from "mobx-react"
 
+@observer
 export default class NewBook extends React.Component {
   render() {
     const bookStore = this.props.route.bookStore;
