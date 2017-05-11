@@ -1,7 +1,8 @@
 import React from "react"
-import {Link} from "react-router"
+import { Link } from "react-router"
 
 export default class Edit extends React.Component {
+    
     render() {
         const id = this.props.params.id;
         const store = this.props.route.bookStore;
