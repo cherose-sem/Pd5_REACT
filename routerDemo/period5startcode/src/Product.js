@@ -17,8 +17,8 @@ export default class Product extends React.Component {
         <h3>All our great books </h3>
         <ul>
           {books.map((book) => <li key={book.id}>
-            {book.title} <Link to={`products/details/${book.id}`}>(details)</Link>
-            <button onClick={() => bookStore.deleteBook(book.id)} >Remove</button></li>)}
+            {book.title} <Link to={`products/details/${book.id}`}> details </Link>
+            <button onClick={() => bookStore.deleteBook(book.id)} > Remove </button></li>)}
         </ul>
       </div>
     )

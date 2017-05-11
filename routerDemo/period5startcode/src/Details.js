@@ -9,7 +9,7 @@ export default class Details extends React.Component {
     let book = store.getBook(id);
     return (
       <div>
-      <button>Edit</button>
+       <Link to={`products/details/edit/${book.id}`}>edit</Link>
         <h3 style={{color: "steelblue"}}>Detailed info for the title: {book.title}</h3>
         <h4> {book.info}</h4>
         <h4>{book.moreInfo}</h4>

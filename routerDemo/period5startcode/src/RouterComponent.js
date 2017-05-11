@@ -8,6 +8,7 @@ import Details from "./Details";
 import Home from "./Home";
 import NewBook from "./NewBook";
 import Edit from "./Edit";
+import {Link} from "react-router";
 
  export default class RouterComponent extends React.Component {
 
