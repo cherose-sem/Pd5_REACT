@@ -17,7 +17,6 @@ export default class NewBook extends React.Component {
         <br/>
         <br/>
         <button onClick={() => bookStore.newBook(document.getElementById("title"), document.getElementById("info"), document.getElementById("moreInfo"))}>ADD</button>
-        
       </div>
     );
   }
