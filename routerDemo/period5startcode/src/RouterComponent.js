@@ -7,6 +7,7 @@ import Blog from "./Blog";
 import Details from "./Details";
 import Home from "./Home";
 import NewBook from "./NewBook";
+import Edit from "./Edit";
 
  export default class RouterComponent extends React.Component {
 
@@ -19,6 +20,8 @@ import NewBook from "./NewBook";
             <Route path="products" component={Product}
                    bookStore={this.props.bookStore}/>
             <Route path="products/details/:id" component={Details}
+                   bookStore={this.props.bookStore}/>
+            <Route path="products/details/edit/:id" component={Edit}
                    bookStore={this.props.bookStore}/>
             <Route path="company" component={Company}/>
             <Route path="blog" component={Blog}/>
