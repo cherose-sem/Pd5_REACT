@@ -7,6 +7,7 @@ export default class Details extends React.Component {
     const id = this.props.params.id;
     const store = this.props.route.bookStore;
     let book = store.getBook(id);
+    console.dir(book)
     return (
       <div>
         <h3 style={{color: "steelblue"}}>Detailed info for the title: {book.title}</h3>

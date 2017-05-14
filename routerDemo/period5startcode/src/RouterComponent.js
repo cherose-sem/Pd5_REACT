@@ -8,9 +8,14 @@ import Details from "./Details";
 import Home from "./Home";
 import NewBook from "./NewBook";
 import Edit from "./Edit";
+import {observer} from 'mobx-react'
 
+@observer
  export default class RouterComponent extends React.Component {
 
+   constructor(props){
+        super(props)
+    }
   render() {
     return (
       <div>

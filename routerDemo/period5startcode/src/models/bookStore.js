@@ -1,4 +1,6 @@
 import { observable, useStrict, action } from "mobx"
+const backendURL = "http://localhost:7777/api/"
+const booksURL = `${backendURL}books`
 
 useStrict(true);
 
@@ -18,9 +20,20 @@ class BookStore {
 
   //individual books
   getBook(id) {
-    return this._books.filter((book) => {
-      return book.id === Number(id);
-    })[0];
+    // return this._books.filter((book) => {
+    //   return book.id === Number(id);
+    // })[0];
+    if(this._books == null){
+      return null
+    } 
+    var returnBook;
+    this._books.forEach((book,index) =>{
+      if(book._id == id){
+        returnBook = this._books[index]
+      } 
+    })
+    console.log("HERE:" + returnBook.title)
+    return returnBook;
   }
 
   //edit a book
@@ -30,16 +43,18 @@ class BookStore {
   }
 
   //add a new book
-  @action
-  newBook(title, info, moreInfo) {
-    let book = { "id": this._books.length + 1, "title": title, "info": info, "moreInfo": moreInfo }
-    this.addBook(book);
-  }
+  // @action
+  // newBook(title, info, moreInfo) {
+  //   let book = { "id": this._books.length + 1, "title": title, "info": info, "moreInfo": moreInfo }
+  //   this.addBook(book);
+  // }
 
   @action
   addBook(book) {
     this._books.push(book);
+    console.log("pushed" + book.title)
   }
+  
 
   //delete a book
   @action
@@ -49,7 +64,7 @@ class BookStore {
 
   //this is asynchronous
   fetchBooks = () => {
-    fetch("http://localhost:7777/books")
+    fetch(booksURL)
       .then((response) => {
         return response.json()
       })

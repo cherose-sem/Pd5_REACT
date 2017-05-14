@@ -1,7 +1,5 @@
 import React from "react"
-import { observer } from "mobx-react"
 
-@observer
 export default class NewBook extends React.Component {
 
   constructor(props) {
@@ -11,19 +9,15 @@ export default class NewBook extends React.Component {
     };
   }
 
-  handleSubmit = (evt) => {
-    evt.preventDefault();
-  }
+  handleSubmit = (event) => {
+    event.preventDefault()
+    const target = event.target
+    var book = {}
+    book.title = target.title.value
+    book.info = target.info.value
+    book.moreInfo = target.moreInfo.value
+    this.props.route.bookStore.addBook(book)
 
-  handleInput = (event) => {
-    const target = event.target;
-    const prop = target.id;
-    var value = target.value;
-    var book = this.state.book;
-    book[prop] = value;
-    this.setState({
-      book: book
-    });
   }
 
   render() {
@@ -31,14 +25,11 @@ export default class NewBook extends React.Component {
       <div>
       <h2>ADD YOUR BOOK HERE (^.^)</h2>
         <form onSubmit={this.handleSubmit} >
-          <input id="title" type="text" value={this.state.book.title}
-            placeholder="Title" onChange={this.handleInput} />
+          <input id="title" type="text" placeholder="Title" />
           <br />
-          <input id="info" type="text" value={this.state.book.info}
-            placeholder="Info" onChange={this.handleInput} />
+          <input id="info" type="text" placeholder="Info"/>
           <br />
-          <input id="moreInfo" type="text" value={this.state.book.moreInfo}
-            placeholder="MoreInfo" onChange={this.handleInput} />
+          <input id="moreInfo" type="text" placeholder="MoreInfo" />
           <br />
           <button >Submit</button>
         </form>
