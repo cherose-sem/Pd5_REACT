@@ -52,7 +52,7 @@ class BookStore {
   @action
   addBook(book) {
     this._books.push(book);
-    console.log("pushed" + book.title)
+    console.log("pushed " + book.title)
   }
   
 
