@@ -30,8 +30,6 @@ function addBook(book, callback) {
         callback(data)
       })
     })
-
-
 }
 
 function deleteBook(bookId, callback) {

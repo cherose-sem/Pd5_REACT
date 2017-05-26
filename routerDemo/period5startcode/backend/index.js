@@ -2,7 +2,7 @@ var express = require("express")
 var app = express()
 var port = 7777
 var facade = require("./db")
-var bodyParser = require('body-parser');
+var bodyParser = require('body-parser'); // wraps it into json object
 
 app.listen(port, function(){
     console.log("Server Started at Port " + port)
