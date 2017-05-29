@@ -71,7 +71,7 @@ describe('deleteBook', function(){
 function baseState(callback){
     var MongoClient = require('mongodb').MongoClient
     MongoClient.connect(url,function(err,db){
-        var collection = db.collection('books')
+        var collection = db.collection('booksDB')
         collection.drop(function(err,replay){
             db.close()
             insertTestData(callback)

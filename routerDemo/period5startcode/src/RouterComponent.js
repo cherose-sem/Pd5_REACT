@@ -17,7 +17,7 @@ import {observer} from 'mobx-react'
         super(props)
     }
   render() {
-    var bookStore = this.props.bookStore
+    // var bookStore = this.props.bookStore
     return (
       <div>
         <Router history={hashHistory}>

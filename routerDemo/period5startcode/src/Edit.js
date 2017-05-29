@@ -1,6 +1,6 @@
 import React from "react"
 import './models/bookStore'
-import { Link } from "react-router"
+// import { Link } from "react-router"
 import {observer} from 'mobx-react' // state management
 
 const Edit = observer(({ bookStore, book }) => {

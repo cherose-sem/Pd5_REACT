@@ -20,9 +20,6 @@ class BookStore {
 
   //individual books
   getBook(id) {
-    // return this._books.filter((book) => {
-    //   return book.id === Number(id);
-    // })[0];
     if (this._books == null) {
       return null
     }
@@ -40,10 +37,6 @@ class BookStore {
   changeBooks(id) {
     this._books.replace(id);
   }
-  //   changeBooks = action((books) =>{
-  //   this._books = books
-  // })
-
 
   //edit a book
   editBook = (book) => {
@@ -51,14 +44,6 @@ class BookStore {
     if (book.id == null) throw Error("No such book!")
 
   }
-
-
-  //add a new book
-  // @action
-  // newBook(title, info, moreInfo) {
-  //   let book = { "id": this._books.length + 1, "title": title, "info": info, "moreInfo": moreInfo }
-  //   this.addBook(book);
-  // }
 
   @action
   addBook(book) {
