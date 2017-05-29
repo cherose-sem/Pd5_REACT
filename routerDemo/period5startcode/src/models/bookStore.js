@@ -41,7 +41,7 @@ class BookStore {
   }
 
 
-  editBook (book) {
+  editBook(book) {
     var config = {}
 
     if(book.id == null) throw Error("no Id!")
