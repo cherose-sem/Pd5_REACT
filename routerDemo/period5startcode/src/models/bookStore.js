@@ -23,24 +23,35 @@ class BookStore {
     // return this._books.filter((book) => {
     //   return book.id === Number(id);
     // })[0];
-    if(this._books == null){
+    if (this._books == null) {
       return null
-    } 
+    }
     var returnBook;
-    this._books.forEach((book,index) =>{
-      if(book._id == id){
+    this._books.forEach((book, index) => {
+      if (book._id == id) {
         returnBook = this._books[index]
-      } 
+      }
     })
     console.log("HERE:" + returnBook.title)
     return returnBook;
   }
 
-  //edit a book
   @action
   changeBooks(id) {
     this._books.replace(id);
   }
+  //   changeBooks = action((books) =>{
+  //   this._books = books
+  // })
+
+
+  //edit a book
+  editBook = (book) => {
+    // TODO
+    if (book.id == null) throw Error("No such book!")
+
+  }
+
 
   //add a new book
   // @action
@@ -52,9 +63,9 @@ class BookStore {
   @action
   addBook(book) {
     this._books.push(book);
-    console.log("pushed" + book.title)
+    console.log("added " + book.title)
   }
-  
+
 
   //delete a book
   @action

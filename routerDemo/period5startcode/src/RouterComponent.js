@@ -17,20 +17,21 @@ import {observer} from 'mobx-react'
         super(props)
     }
   render() {
+    var bookStore = this.props.bookStore
     return (
       <div>
         <Router history={hashHistory}>
-          <Route path="/" component={App}>
-            <IndexRoute component={Home}></IndexRoute>
-            <Route path="products" component={Product}
-                   bookStore={this.props.bookStore}/>
-            <Route path="products/details/:id" component={Details}
-                   bookStore={this.props.bookStore}/>
-            <Route path="products/details/edit/:id" component={Edit}
-                   bookStore={this.props.bookStore}/>
-            <Route path="company" component={Company}/>
-            <Route path="blog" component={Blog}/>
-            <Route path="newbook" component={NewBook} 
+          <Route path = "/" component={App}>
+            <IndexRoute component = {Home}></IndexRoute>
+            <Route path = "products" component={Product}
+                   bookStore = {this.props.bookStore}/>
+            <Route path = "products/details/:id" component={Details}
+                   bookStore = {this.props.bookStore}/>
+            <Route path = "products/details/edit/:id" component={Edit}
+                   bookStore = {this.props.bookStore}/>
+            <Route path = "company" component={Company}/>
+            <Route path = "blog" component={Blog}/>
+            <Route path = "newbook" component={NewBook} 
                    bookStore={this.props.bookStore}/>
           </Route>
         </Router>

@@ -23,6 +23,7 @@ function getBooks(callback){
     })
 }
 
+<<<<<<< HEAD
 function addBook(book, callback){
     console.log(book)
     MongoClient.connect(url, function(err,db){
@@ -40,6 +41,17 @@ function addBook(book, callback){
 
         })
     
+=======
+function addBook(book, callback) {
+  console.log(book)
+  MongoClient.connect(url, function (err, db) {
+      var collection = db.collection("books")
+      collection.insert(book, function (err, data) {
+        assert.equal(null, err)
+        callback(data)
+      })
+    })
+>>>>>>> 770e730e90d57795bb17f22d9136d5381c31fe8b
 }
 
 function deleteBook(bookId, callback){

@@ -17,23 +17,40 @@ export default class NewBook extends React.Component {
     book.info = target.info.value
     book.moreInfo = target.moreInfo.value
     this.props.route.bookStore.addBook(book)
-
   }
 
-  render() {
+render() {
     return (
       <div>
-      <h2>ADD YOUR BOOK HERE (^.^)</h2>
-        <form onSubmit={this.handleSubmit} >
-          <input id="title" type="text" placeholder="Title" />
-          <br />
-          <input id="info" type="text" placeholder="Info"/>
-          <br />
-          <input id="moreInfo" type="text" placeholder="MoreInfo" />
-          <br />
-          <button >Submit</button>
+        <form style={{ marginTop: 50 }} onSubmit={this.handleSubmit} >
+          <div className="row">
+            <div className="col-sm-2" >
+            <h3>Add new book (^.^) </h3>
+              <p>Title:</p>
+            </div>
+            <div className="col-sm-4">
+              <input type="text" id="title" />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-sm-2">
+              <p>Info:</p>
+            </div>
+            <div className="col-sm-4">
+              <input type="text" id="info" />
+            </div>
+            <div className="row">
+            <div className="col-sm-2">
+              <p>MoreInfo:</p>
+            </div>
+            <div className="col-sm-4">
+              <input type="text" id="moreInfo" />
+            </div>
+            </div>
+          </div>
+          <button className="btn">Save</button>
         </form>
       </div>
-    );
+    )
   }
 }
