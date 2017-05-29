@@ -1,4 +1,5 @@
 import { observable, useStrict, action } from "mobx"
+import axios from 'axios'
 const backendURL = "http://localhost:7777/api/"
 const booksURL = `${backendURL}books`
 
@@ -9,16 +10,17 @@ class BookStore {
 
   @observable _books = [];
 
+
   constructor() {
     this.fetchBooks();
   }
 
-  //get all books
+
   get books() {
     return this._books;
   }
 
-  //individual books
+
   getBook(id) {
     if (this._books == null) {
       return null
@@ -29,34 +31,51 @@ class BookStore {
         returnBook = this._books[index]
       }
     })
-    console.log("HERE:" + returnBook.title)
+    console.log("Here is Your book " + returnBook.title)
     return returnBook;
   }
 
-  @action
+
   changeBooks(id) {
     this._books.replace(id);
   }
 
-  //edit a book
-  editBook = (book) => {
-    // TODO
-    if (book.id == null) throw Error("No such book!")
 
+  editBook (book) {
+
+    if (book.id == null) throw Error("no Id!")
+    axios.put(`${backendURL}/api/books`, { book }, config)
+      .then((response) => {
+        console.log(response)
+        this.fetchBooks()
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
-  @action
+
   addBook(book) {
-    this._books.push(book);
-    console.log("added " + book.title)
+
+    var config = {}
+
+    axios.post(`${backendURL}books`, { book }, config)
+      .then((response) => {
+        console.log(response)
+        this.fetchBooks()
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+
   }
 
 
-  //delete a book
   @action
   deleteBook(book_id) {
     this._books.splice(this._books.findIndex((book) => { return book.id === book_id }), 1)
   }
+
 
   //this is asynchronous
   fetchBooks = () => {

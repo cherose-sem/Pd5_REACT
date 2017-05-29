@@ -1,5 +1,7 @@
 import React from "react"
 import {Link} from "react-router"
+import EditForm from './Edit'
+
 
 export default class Details extends React.Component {
   render() {
@@ -13,7 +15,7 @@ export default class Details extends React.Component {
         <h4> {book.info}</h4>
         <h4>{book.moreInfo}</h4>
         <br />
-        <Link to={`products/details/edit/${book.id}`}>edit</Link>
+        <EditForm bookStore={this.props.bookStore} book={book} />
         <br />
         <br />
         <Link to="/products">Products</Link>

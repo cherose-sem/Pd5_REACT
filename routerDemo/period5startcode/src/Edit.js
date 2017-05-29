@@ -15,7 +15,7 @@ const Edit = observer(({ bookStore, book }) => {
         editBook.title = target.title.value
         editBook.info = target.info.value
         editBook.moreInfo = target.moreInfo.value
-        bookStore.editBook(editBook)
+        bookStore.editBook(editBook)        
     }
 
     var title = book.title
