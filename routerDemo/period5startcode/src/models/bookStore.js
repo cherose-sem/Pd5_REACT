@@ -1,9 +1,9 @@
-import { observable, useStrict, action } from "mobx"
+import { observable } from "mobx"
 import axios from 'axios'
 const backendURL = "http://localhost:7777/api/"
 const booksURL = `${backendURL}books`
 
-useStrict(true);
+// useStrict(true);
 
 //DataStore for this Demo
 class BookStore {
@@ -42,16 +42,17 @@ class BookStore {
 
 
   editBook (book) {
+    var config = {}
 
-    if (book.id == null) throw Error("no Id!")
-    axios.put(`${backendURL}/api/books`, { book }, config)
-      .then((response) => {
-        console.log(response)
-        this.fetchBooks()
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+    if(book.id == null) throw Error("no Id!")
+    axios.put(`${backendURL}books`,{book}, config)
+    .then((response) =>{
+      console.log(response)
+      this.fetchBooks()
+    })
+    .catch((error) =>{
+      console.log(error)
+    })
   }
 
 
@@ -71,10 +72,19 @@ class BookStore {
   }
 
 
-  @action
   deleteBook(book_id) {
-    this._books.splice(this._books.findIndex((book) => { return book.id === book_id }), 1)
-  }
+
+    var config = {}
+
+    axios.delete(`${booksURL}/${book_id}`, config)
+      .then((response) =>{
+        console.log(response)
+        this.fetchBooks()
+      })
+      .catch((error) =>{
+        console.log(error)
+      })
+    }
 
 
   //this is asynchronous

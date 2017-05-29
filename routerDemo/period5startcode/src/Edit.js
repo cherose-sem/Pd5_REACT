@@ -15,6 +15,7 @@ const Edit = observer(({ bookStore, book }) => {
         editBook.title = target.title.value
         editBook.info = target.info.value
         editBook.moreInfo = target.moreInfo.value
+        console.dir(bookStore)
         bookStore.editBook(editBook)        
     }
 
@@ -24,7 +25,6 @@ const Edit = observer(({ bookStore, book }) => {
     return (
         <div className="col-md-6">
             <h3>Edit Your book (^.^) </h3>
-            // handleSubmit is called from above, with all the info inside
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label htmlFor="title">Title</label>

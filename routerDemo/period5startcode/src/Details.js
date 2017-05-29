@@ -15,7 +15,7 @@ export default class Details extends React.Component {
         <h4> {book.info}</h4>
         <h4>{book.moreInfo}</h4>
         <br />
-        <EditForm bookStore={this.props.bookStore} book={book} />
+        <EditForm bookStore={this.props.route.bookStore} book={book} />
         <br />
         <br />
         <Link to="/products">Products</Link>
