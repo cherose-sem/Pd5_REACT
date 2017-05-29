@@ -41,7 +41,9 @@ class BookStore {
   }
 
 
-  editBook (book) {
+  editBook(book) {
+
+    var config = {}
 
     if (book.id == null) throw Error("no Id!")
     axios.put(`${backendURL}/api/books`, { book }, config)
