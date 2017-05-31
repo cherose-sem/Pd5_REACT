@@ -4,49 +4,59 @@ var url = 'mongodb://127.0.0.1/users'
 var bcrypt = require("bcrypt")
 
 
-function setURL(newURL){
+function setURL(newURL) {
     url = newURL
 }
 
-function createNewUser(username, password, callback){
+function createNewUser(username, password, callback) {
     // hashing and salting the password
-    let hash = bcrypt.hashSync(password,10) // 10 is rounds use when creating an salt!
-    MongoClient.connect(url, function(err,db){
-        assert.equal(null,err)
+    let hash = bcrypt.hashSync(password, 10) // 10 is rounds use when creating an salt!
+    MongoClient.connect(url, function (err, db) {
+        assert.equal(null, err)
         assert.ok(db != null)
 
-        db.collection("users").insertOne({username:username, password:hash}, function(err,data){
-            assert.equal(null,err)
+        db.collection("users").insertOne({ username: username, password: hash }, function (err, data) {
+            assert.equal(null, err)
             var result = data.ops[0]
             callback(result)
         })
     })
 }
 
-function findUserByName(username,callback){
-    MongoClient.connect(url,function(err,db){
-        assert.equal(null,err)
+function findUserByName(username, callback) {
+    MongoClient.connect(url, function (err, db) {
+        assert.equal(null, err)
         assert.ok(db != null)
 
-        db.collection("users").findOne({username:username}, function(err,data){
-            assert.equal(null,err)
-            
+        db.collection("users").findOne({ username: username }, function (err, data) {
+            assert.equal(null, err)
+
         })
     })
 }
 
-function login(username,password,callback){
-    MongoClient.connect(url,function(err,db){
-        assert.equal(null,err)
+function login(username, password, callback) {
+    MongoClient.connect(url, function (err, db) {
+        assert.equal(null, err)
         assert.ok(db != null)
 
-        db.collection("users").findOne({username:username}, function(err,data){
-            if(data == null){
-             callback({user:null, succes:false})
-             return
+        db.collection("users").findOne({ username: username }, function (err, data) {
+            // if(data == null){
+            //  callback({user:null, succes:false})
+            //  return
+            // }
+            if (err) {
+                callback(err, null);
+            } else if (data == null) {
+                callback({ username: null, success: false })
+                return
+            } else if (bcrypt.compareSync(password, data.password)) {
+                callback({ user: data, success: true })
+            } else {
+                console.log("Failed to log in!")
+                callback({ user: null, success: false })
             }
-            
-        }) 
+        })
     })
 }
 
@@ -54,8 +64,8 @@ function login(username,password,callback){
 
 var userFacade = {
     setURL: setURL,
-    createNewUser : createNewUser,
-    login : login,
+    createNewUser: createNewUser,
+    login: login,
     findUserByName: findUserByName
 }
 

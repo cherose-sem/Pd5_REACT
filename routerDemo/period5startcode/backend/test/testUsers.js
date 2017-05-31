@@ -8,7 +8,7 @@ describe('usertests',function(){
 
 
 var user1 = {
-    userId : "Che",
+    username : "Che",
     password: "pw123"
 }
 
@@ -31,15 +31,12 @@ describe('createNewUser + Login', function(){
         userFacade.createNewUser("myNewUser","123pass",function(response){
             expect(response._id).to.exist
             userFacade.login("myNewUser","123pass",function(response){
-                expect(response.succes).to.be.equal(true)
+                expect(response.success).to.be.equal(true)
                 done()
             })
         })
     })
 })
-
-
-
 
 function baseState(callback){
     var MongoClient = require('mongodb').MongoClient
@@ -53,7 +50,7 @@ function baseState(callback){
 }
 
 function insertTestData(callback){
-    userFacade.createNewUser(user1.userId,user1.password,function(response){
+    userFacade.createNewUser(user1.username,user1.password,function(response){
         expect(response._id).to.exist
         callback(true)
     })

@@ -3,14 +3,29 @@ var app = express()
 var port = 7777
 var facade = require("./db")
 var userFacade = require(`./userFacade`)
+
+var _=require("lodash")
 var bodyParser = require('body-parser'); // wraps it into json object
-var jwt = require("jsonwebtoken");
+var JWT = require("jsonwebtoken");
 
 var passport = require("passport");
 var passportJWT = require("passport-jwt");
 
 var ExtractJwt = passportJWT.ExtractJwt;
 var JwtStrategy = passportJWT.Strategy;
+
+// var users = [
+//   {
+//     id: 1,
+//     name: 'che',
+//     password: '%2yx4'
+//   },
+//   {
+//     id: 2,
+//     name: 'test',
+//     password: 'test'
+//   }
+// ];
 
 var jwtOptions = {}
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeader();
@@ -19,7 +34,7 @@ jwtOptions.secretOrKey = "Secret"
 var strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
     try{
     console.log('payload received', jwt_payload);
-    userFacade.findUserByName(jwt_payload.userName, function(user){
+    userFacade.findUserByName(jwt_payload.username, function(user){
         if (user) {
         next(null, user);
         } else {
@@ -56,18 +71,18 @@ app.get("/api/books", function(req, res){
     })
 
 app.post("/api/login", function(req,res){
-    if(req.body.userName && req.body.password){
-    var userName = req.body.userName;
+    if(req.body.username && req.body.password){
+    var username = req.body.username;
     var password = req.body.password;
   }
   else{
-      res.json({message:"Please provide body with userName and password"})
+      res.json({message:"Please provide body with username and password"})
       return
   }
-    userFacade.login(userName,password,function(data){
-        if(data.succes === false) res.status(401).json({message: "No authentication"})
+    userFacade.login(username,password,function(data){
+        if(data.success === false) res.status(401).json({message: "No authentication"})
         else {
-            var payload = {userName: data.user.username}
+            var payload = {username: data.user.username}
             var token = JWT.sign(payload,jwtOptions.secretOrKey);
             res.json({message: "ok", token:token})
         }
@@ -75,7 +90,7 @@ app.post("/api/login", function(req,res){
 })
 
 app.get("/secret", passport.authenticate('jwt', { session: false }), function(req, res){
-  res.json("Succesfully gained the secret");
+  res.json("Successfully gained the secret");
 });
 
 
