@@ -1,4 +1,4 @@
-var db = require("./../db")
+var db = require("./../facade")
 var expect = require("chai").expect
 var booksData = require("./data")
 var url = 'mongodb://127.0.0.1/booksDB'

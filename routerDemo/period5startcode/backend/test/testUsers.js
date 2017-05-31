@@ -1,7 +1,7 @@
 var userFacade = require("./../userFacade")
 var expect = require("chai").expect
 var testdata = require("./data")
-var testURL = 'mongodb://127.0.0.1/users'
+var testURL = 'mongodb://127.0.0.1/booksDB'
 
 
 describe('usertests',function(){

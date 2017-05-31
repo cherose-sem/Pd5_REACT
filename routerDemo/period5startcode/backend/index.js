@@ -1,40 +1,27 @@
 var express = require("express")
 var app = express()
 var port = 7777
-var facade = require("./db")
-var userFacade = require(`./userFacade`)
+var facade = require("./facade")
+var userFacade = require('./userFacade')
+var bodyParser = require('body-parser');
+var helmet = require('helmet')
 
-var _=require("lodash")
-var bodyParser = require('body-parser'); // wraps it into json object
-var JWT = require("jsonwebtoken");
 
-var passport = require("passport");
-var passportJWT = require("passport-jwt");
-
+var passport = require("passport")
+var passportJWT = require('passport-jwt')
+var JWT  = require('jsonwebtoken')
+var Secret = "This is my secret" // this file is ignored on git!
 var ExtractJwt = passportJWT.ExtractJwt;
 var JwtStrategy = passportJWT.Strategy;
 
-// var users = [
-//   {
-//     id: 1,
-//     name: 'che',
-//     password: '%2yx4'
-//   },
-//   {
-//     id: 2,
-//     name: 'test',
-//     password: 'test'
-//   }
-// ];
-
 var jwtOptions = {}
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeader();
-jwtOptions.secretOrKey = "Secret"
+jwtOptions.secretOrKey = Secret
 
 var strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
     try{
     console.log('payload received', jwt_payload);
-    userFacade.findUserByName(jwt_payload.username, function(user){
+    userFacade.findUserByName(jwt_payload.userName, function(user){
         if (user) {
         next(null, user);
         } else {
@@ -46,6 +33,7 @@ var strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
         next(null,false)
     }
 });
+app.use(helmet());
 
 passport.use(strategy);
 app.use(passport.initialize());
@@ -57,7 +45,7 @@ app.listen(port, function(){
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
     res.setHeader('Access-Control-Allow-Credentials', true);
     next();
 });
@@ -71,30 +59,23 @@ app.get("/api/books", function(req, res){
     })
 
 app.post("/api/login", function(req,res){
-    if(req.body.username && req.body.password){
-    var username = req.body.username;
+    if(req.body.userName && req.body.password){
+    var userName = req.body.userName;
     var password = req.body.password;
   }
   else{
-      res.json({message:"Please provide body with username and password"})
+      res.json({message:"Please provide body with userName and password"})
       return
   }
-    userFacade.login(username,password,function(data){
-        if(data.success === false) res.status(401).json({message: "No authentication"})
+    userFacade.login(userName,password,function(data){
+        if(data.succes === false) res.status(401).json({message: "No authentication"})
         else {
-            var payload = {username: data.user.username}
+            var payload = {userName: data.user.username}
             var token = JWT.sign(payload,jwtOptions.secretOrKey);
             res.json({message: "ok", token:token})
         }
     })
 })
-
-app.get("/secret", passport.authenticate('jwt', { session: false }), function(req, res){
-  res.json("Successfully gained the secret");
-});
-
-
-
 
 app.get("/secret", passport.authenticate('jwt', { session: false }), function(req, res){
   res.json("Succesfully gained the secret");

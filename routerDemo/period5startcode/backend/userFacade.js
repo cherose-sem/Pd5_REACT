@@ -1,6 +1,7 @@
 var MongoClient = require('mongodb').MongoClient
 var assert = require('assert')
-var url = 'mongodb://127.0.0.1/users'
+var url = 'mongodb://127.0.0.1/booksDB'
+var autoIncrement = require("mongodb-autoincrement");
 var bcrypt = require("bcrypt")
 
 
@@ -9,14 +10,14 @@ function setURL(newURL) {
 }
 
 function createNewUser(username, password, callback) {
-    // hashing and salting the password
-    let hash = bcrypt.hashSync(password, 10) // 10 is rounds use when creating an salt!
-    MongoClient.connect(url, function (err, db) {
-        assert.equal(null, err)
+     // hashing and salting the password
+    let hash = bcrypt.hashSync(password,10) // 10 is rounds use when creating a salt!
+    MongoClient.connect(url, function(err,db){
+        assert.equal(null,err)
         assert.ok(db != null)
 
-        db.collection("users").insertOne({ username: username, password: hash }, function (err, data) {
-            assert.equal(null, err)
+        db.collection("users").insertOne({username:username, password:hash}, function(err,data){
+            assert.equal(null,err)
             var result = data.ops[0]
             callback(result)
         })
@@ -24,39 +25,39 @@ function createNewUser(username, password, callback) {
 }
 
 function findUserByName(username, callback) {
-    MongoClient.connect(url, function (err, db) {
-        assert.equal(null, err)
+     MongoClient.connect(url,function(err,db){
+        assert.equal(null,err)
         assert.ok(db != null)
+        var user = {}
 
-        db.collection("users").findOne({ username: username }, function (err, data) {
-            assert.equal(null, err)
-
+        db.collection("users").findOne({username:username}, function(err,data){
+            assert.equal(null,err)
+            user = data
+            callback(user)
         })
     })
 }
 
 function login(username, password, callback) {
-    MongoClient.connect(url, function (err, db) {
-        assert.equal(null, err)
+    MongoClient.connect(url,function(err,db){
+        assert.equal(null,err)
         assert.ok(db != null)
+        var user = {}
 
-        db.collection("users").findOne({ username: username }, function (err, data) {
-            // if(data == null){
-            //  callback({user:null, succes:false})
-            //  return
-            // }
-            if (err) {
-                callback(err, null);
-            } else if (data == null) {
-                callback({ username: null, success: false })
-                return
-            } else if (bcrypt.compareSync(password, data.password)) {
-                callback({ user: data, success: true })
-            } else {
-                console.log("Failed to log in!")
-                callback({ user: null, success: false })
+        db.collection("users").findOne({username:username}, function(err,data){
+            if(data == null){
+             callback({user:null, success:false})
+             return
             }
-        })
+            user = data
+            if(bcrypt.compareSync(password, user.password)){
+                callback({user: user, success:true})
+            }
+            else{
+                console.log("Authentication Failed")
+                callback({user:null, success:false})
+            }
+        }) 
     })
 }
 
