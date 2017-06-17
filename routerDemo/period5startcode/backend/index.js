@@ -10,7 +10,7 @@ var helmet = require('helmet')
 var passport = require("passport")
 var passportJWT = require('passport-jwt')
 var JWT  = require('jsonwebtoken')
-var Secret = "This is my secret" // this file is ignored on git!
+var Secret = "This is my secret"
 var ExtractJwt = passportJWT.ExtractJwt;
 var JwtStrategy = passportJWT.Strategy;
 
@@ -81,14 +81,14 @@ app.get("/secret", passport.authenticate('jwt', { session: false }), function(re
   res.json("Succesfully gained the secret");
 });
 
-app.post("/api/books",passport.authenticate('jwt', { session: false }), function(req,res){
+app.post("/api/books", function(req,res){
     var book = req.body.book
      facade.addBook(book, function(book){
          res.send(JSON.stringify(book))
      })
     })
 
-app.put("/api/books", passport.authenticate('jwt', { session: false }), function(req,res){
+app.put("/api/books", function(req,res){
         var book = req.body.book
         facade.updateBook(book, function(updatedBook){
             console.log(updatedBook)
@@ -96,10 +96,34 @@ app.put("/api/books", passport.authenticate('jwt', { session: false }), function
         }) 
     })
 
-app.delete("/api/books/:id",passport.authenticate('jwt', { session: false }), function(req,res){
+app.delete("/api/books/:id", function(req,res){
         var bookid = parseInt( req.params.id)
         facade.deleteBook(bookid, function(response){
             res.send(JSON.stringify(response))
         })
     })
+
+// app.post("/api/books",passport.authenticate('jwt', { session: false }), function(req,res){
+//     var book = req.body.book
+//      facade.addBook(book, function(book){
+//          res.send(JSON.stringify(book))
+//      })
+//     })
+
+// app.put("/api/books", passport.authenticate('jwt', { session: false }), function(req,res){
+//         var book = req.body.book
+//         facade.updateBook(book, function(updatedBook){
+//             console.log(updatedBook)
+//             res.send(JSON.stringify(updatedBook))
+//         }) 
+//     })
+
+// app.delete("/api/books/:id",passport.authenticate('jwt', { session: false }), function(req,res){
+//         var bookid = parseInt( req.params.id)
+//         facade.deleteBook(bookid, function(response){
+//             res.send(JSON.stringify(response))
+//         })
+//     })
+
+
 })

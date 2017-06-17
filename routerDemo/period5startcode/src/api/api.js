@@ -1,5 +1,5 @@
 let router = require("express").Router();
-var Book = require('../models/Book');
+var Book = require('../models/bookStore');
 
 router.get("/", (req, res) => {
   res.json({ msg: "Hello World" });
